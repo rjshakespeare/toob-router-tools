@@ -1,0 +1,22 @@
+{
+  "name": "optus-router-tools",
+  "version": "1.0.0",
+  "description": "Open source utilities for a new NBN Optus router",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/insou22/optus-router-tools.git"
+  },
+  "author": "insou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/insou22/optus-router-tools/issues"
+  },
+  "homepage": "https://github.com/insou22/optus-router-tools#readme",
+  "dependencies": {
+    "axios": "^0.19.0"
+  }
+}
