@@ -9,13 +9,13 @@ function sha512(str) {
 }
 
 function loadPacket(packetName) {
-    const packet = JSON.parse(fs.readFileSync(`./packets/${packetName}.json`));
+    const packet = JSON.parse(fs.readFileSync(`${__dirname}/packets/${packetName}.json`));
     packet.id = 0;
 
     return packet;
 }
 
-module.exports = class Client {
+module.exports.Client = class Client {
 
     constructor(routerIp, username, password) {
         this.routerIp = routerIp;

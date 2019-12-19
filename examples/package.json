@@ -1,0 +1,14 @@
+{
+  "name": "optus-router-tools-examples",
+  "version": "1.0.1",
+  "description": "Examples for optus-router-tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "insou",
+  "license": "ISC",
+  "dependencies": {
+    "optus-router-tools": "^1.0.1"
+  }
+}
