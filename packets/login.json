@@ -1,5 +1,4 @@
 {
-    "id" :0,
     "method": "logIn",
     "parameters": { 
         "user": "this will be filled in by login()",

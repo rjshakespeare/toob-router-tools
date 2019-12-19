@@ -9,10 +9,9 @@ require('dotenv').config({
     })()
 });
 const Client = require('./index.js');
-
 const client = new Client(process.env.ROUTER_IP, process.env.ROUTER_USERNAME, process.env.ROUTER_PASSWORD);
 
-(async () => {
+const login = async () => {
     console.log('Logging into router...');
 
     if (!await client.login()) {
@@ -21,8 +20,11 @@ const client = new Client(process.env.ROUTER_IP, process.env.ROUTER_USERNAME, pr
     }
 
     console.log('Logged in!\n');
+};
 
-    
+(async () => {
+    await login();
+
     console.log('Restarting router...');
 
     await client.restartRouter();

@@ -8,8 +8,11 @@ function sha512(str) {
     return crypto.createHash('sha512').update(str).digest('hex');
 }
 
-function loadPacket(packet) {
-    return JSON.parse(fs.readFileSync(`./packets/${packet}.json`));
+function loadPacket(packetName) {
+    const packet = JSON.parse(fs.readFileSync(`./packets/${packetName}.json`));
+    packet.id = 0;
+
+    return packet;
 }
 
 module.exports = class Client {
@@ -98,6 +101,10 @@ module.exports = class Client {
 
     async restartRouter() {
         return this.makeRequest([loadPacket('restart')]);
+    }
+
+    async getEthernet() {
+        return (await this.makeRequest([loadPacket('ethernet')])).reply.actions[0].callbacks[0].parameters.value;
     }
 
 }
