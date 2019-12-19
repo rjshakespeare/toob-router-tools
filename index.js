@@ -84,6 +84,10 @@ module.exports = class Client {
             this.sessionId = resp.reply.actions[0].callbacks[0].parameters.id;
             this.serverNonce = resp.reply.actions[0].callbacks[0].parameters.nonce;
 
+            if (!this.sessionId || !this.serverNonce) {
+                return false;
+            }
+            
             return true;
 
         } catch (err) {
