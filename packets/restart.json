@@ -1,0 +1,8 @@
+{
+    "id": 0,
+    "method": "reboot",
+    "xpath": "Device",
+    "parameters": { 
+        "source": "GUI"
+    }
+}

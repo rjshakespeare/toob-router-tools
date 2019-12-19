@@ -1,8 +1,15 @@
+'use strict';
+
 const crypto = require('crypto');
 const axios  = require('axios');
+const fs     = require('fs');
 
 function sha512(str) {
     return crypto.createHash('sha512').update(str).digest('hex');
+}
+
+function loadPacket(packet) {
+    return JSON.parse(fs.readFileSync(`./packets/${packet}.json`));
 }
 
 module.exports = class Client {
@@ -39,14 +46,14 @@ module.exports = class Client {
         this.generateCurrentNonce();
         this.generateAuthKey();
 
-        const request = {};
-
-        request.id = this.requestId;
-        request['session-id'] = `${this.sessionId}`;
-        request.priority = priority;
-        request.actions = actions;
-        request.cnonce = this.currentNonce;
-        request['auth-key'] = this.auth;
+        const request = {
+            'id': this.requestId,
+            'session-id': `${this.sessionId}`,
+            'priority': priority,
+            'actions': actions,
+            'cnonce': this.currentNonce,
+            'auth-key': this.auth
+        };
 
         const resp = await axios.post(
             `http://${this.routerIp}/cgi/json-req`, 
@@ -55,7 +62,7 @@ module.exports = class Client {
             },
             {
                 transformRequest: [
-                    function (data, headers) {
+                    data => {
                         return 'req=' + JSON.stringify(data);
                     }
                 ]
@@ -69,39 +76,10 @@ module.exports = class Client {
 
     async login() {
         try {
-            const resp = await this.makeRequest([
-                {
-                    "id" :0,
-                    "method": "logIn",
-                    "parameters": { 
-                        "user": this.username,
-                        "persistent": "true",
-                        "session-options": { 
-                            "nss": [ 
-                                { 
-                                    "name": "gtw",
-                                    "uri": "http://sagemcom.com/gateway-data"
-                                }
-                            ],
-                            "language": "ident",
-                            "context-flags": { 
-                                "get-content-name": true,
-                                "local-time": true
-                            },
-                            "capability-depth": 2,
-                            "capability-flags": { 
-                                "name": true,
-                                "default-value": false,
-                                "restriction": true,
-                                "description": false
-                            },
-                            "time-format": "ISO_8601",
-                            "write-only-string": "_XMO_WRITE_ONLY_",
-                            "undefined-write-only-string": "_XMO_UNDEFINED_WRITE_ONLY_"
-                        }
-                    }
-                }
-            ], true);
+            const packet = loadPacket('login');
+            packet.parameters.user = this.username;
+
+            const resp = await this.makeRequest([packet], true);
 
             this.sessionId = resp.reply.actions[0].callbacks[0].parameters.id;
             this.serverNonce = resp.reply.actions[0].callbacks[0].parameters.nonce;
@@ -115,16 +93,7 @@ module.exports = class Client {
     }
 
     async restartRouter() {
-        return this.makeRequest([
-            {
-                "id": 0,
-                "method": "reboot",
-                "xpath": "Device",
-                "parameters": { 
-                    "source": "GUI"
-                }
-            }
-        ]);
+        return this.makeRequest([loadPacket('restart')]);
     }
 
 }
