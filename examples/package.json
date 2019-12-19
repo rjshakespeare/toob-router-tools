@@ -1,6 +1,6 @@
 {
   "name": "optus-router-tools-examples",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Examples for optus-router-tools",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,6 @@
   "author": "insou",
   "license": "ISC",
   "dependencies": {
-    "optus-router-tools": "^1.0.1"
+    "optus-router-tools": "^1.0.3"
   }
 }

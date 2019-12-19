@@ -1,5 +1,7 @@
+const fs = require('fs');
+
 require('dotenv').config({
-    path: require('fs').existsSync(`${__dirname}/.env`) ? `${__dirname}/.env` : `${__dirname}/default.env`
+    path: fs.existsSync(`${__dirname}/.env`) ? `${__dirname}/.env` : `${__dirname}/default.env`
 });
 
 const readline = require('readline').createInterface({
@@ -28,18 +30,25 @@ const loadExample = (name) => {
 (async () => {
     await login();
 
-    console.log('Examples: [devices, restart]');
+    const examples = fs.readdirSync(__dirname)
+        .filter(file => (
+            file.endsWith('.js') && file !== 'index.js'
+        ))
+        .map(file => (
+            file.substring(0, file.length - 3)
+        ))
+        .join(', ');
+
+    console.log(`Examples: [${examples}]`);
     readline.question('Which example would you like to use today? ', (example) => {
-        switch (example.toLowerCase()) {
-            case 'devices':
-                loadExample('devices');
-                break;
-            case 'restart':
-                loadExample('restart');
-                break;
-            default:
-                console.log('Invalid example.');
+        example = example.toLowerCase();
+
+        if (fs.existsSync(`${__dirname}/${example}.js`)) {
+            loadExample(example);
+        } else {
+            console.log('Invalid example.');
         }
+        
         readline.close();
     });
 

@@ -1,6 +1,6 @@
 {
   "name": "optus-router-tools",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Open source utilities for a new NBN Optus router",
   "main": "index.js",
   "scripts": {

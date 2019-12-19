@@ -107,4 +107,8 @@ module.exports.Client = class Client {
         return (await this.makeRequest([loadPacket('ethernet')])).reply.actions[0].callbacks[0].parameters.value;
     }
 
+    async getPortForwards() {
+        return (await this.makeRequest([loadPacket('getports')])).reply.actions[0].callbacks[0].parameters.value;
+    }
+
 }
