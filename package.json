@@ -1,21 +1,21 @@
 {
-  "name": "optus-router-tools",
-  "version": "1.0.3",
-  "description": "Open source utilities for a new NBN Optus router",
+  "name": "toob-router-tools",
+  "version": "1.0.0",
+  "description": "Open source utilities for a Toob router",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/insou22/optus-router-tools.git"
+    "url": "git+https://github.com/rjsahkespeare/toob-router-tools.git"
   },
-  "author": "insou",
+  "author": "rjshakespeare",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/insou22/optus-router-tools/issues"
+    "url": "https://github.com/rjshakespeare/toob-router-tools/issues"
   },
-  "homepage": "https://github.com/insou22/optus-router-tools#readme",
+  "homepage": "https://github.com/rjshakespeare/toob-router-tools#readme",
   "dependencies": {
     "axios": "^0.19.0",
     "dotenv": "^8.2.0"

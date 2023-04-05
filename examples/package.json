@@ -1,14 +1,14 @@
 {
-  "name": "optus-router-tools-examples",
-  "version": "1.0.3",
-  "description": "Examples for optus-router-tools",
+  "name": "toob-router-tools-examples",
+  "version": "1.0.0",
+  "description": "Examples for toob-router-tools",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "insou",
+  "author": "rjshakespeare",
   "license": "ISC",
   "dependencies": {
-    "optus-router-tools": "^1.0.3"
+    "toob-router-tools": "^1.0.0"
   }
 }

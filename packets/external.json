@@ -1,0 +1,9 @@
+{
+    "method": "getValue",
+    "xpath": "Device/IP/Interfaces/Interface[2]",
+    "options": {
+        "capability-flags": {
+            "interface": true
+        }
+    }
+}

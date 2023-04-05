@@ -1,11 +1,11 @@
 'use strict';
 
 const crypto = require('crypto');
-const axios  = require('axios');
-const fs     = require('fs');
+const axios = require('axios');
+const fs = require('fs');
 
-function sha512(str) {
-    return crypto.createHash('sha512').update(str).digest('hex');
+function md5(str) {
+    return crypto.createHash('md5').update(str).digest('hex');
 }
 
 function loadPacket(packetName) {
@@ -20,7 +20,7 @@ module.exports.Client = class Client {
     constructor(routerIp, username, password) {
         this.routerIp = routerIp;
         this.username = username;
-        this.passwordHash = sha512(password);
+        this.passwordHash = md5(password);
 
         this.serverNonce = '';
         this.sessionId = 0;
@@ -36,15 +36,15 @@ module.exports.Client = class Client {
     }
 
     getCredentialHash() {
-        return sha512(`${this.username}:${this.serverNonce}:${this.passwordHash}`);
+        return md5(`${this.username}:${this.serverNonce}:${this.passwordHash}`);
     }
 
     generateAuthKey() {
         const credentialHash = this.getCredentialHash();
-        this.auth = sha512(`${credentialHash}:${this.requestId}:${this.currentNonce}:JSON:/cgi/json-req`);
+        this.auth = md5(`${credentialHash}:${this.requestId}:${this.currentNonce}:JSON:/cgi/json-req`);
     }
 
-    async makeRequest(actions, priority=false) {
+    async makeRequest(actions, priority = false) {
         this.generateRequestId();
         this.generateCurrentNonce();
         this.generateAuthKey();
@@ -59,7 +59,7 @@ module.exports.Client = class Client {
         };
 
         const resp = await axios.post(
-            `http://${this.routerIp}/cgi/json-req`, 
+            `http://${this.routerIp}/cgi/json-req`,
             {
                 'request': request
             },
@@ -90,7 +90,7 @@ module.exports.Client = class Client {
             if (!this.sessionId || !this.serverNonce) {
                 return false;
             }
-            
+
             return true;
 
         } catch (err) {
@@ -109,6 +109,10 @@ module.exports.Client = class Client {
 
     async getPortForwards() {
         return (await this.makeRequest([loadPacket('getports')])).reply.actions[0].callbacks[0].parameters.value;
+    }
+
+    async getExternalIp() {
+        return (await this.makeRequest([loadPacket('external')])).reply.actions[0].callbacks[0].parameters.value['Interface']['IPv4Addresses'][0]['IPAddress'];
     }
 
 }
