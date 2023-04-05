@@ -9,7 +9,7 @@ const readline = require('readline').createInterface({
     output: process.stdout
 });
 
-const tools = require('optus-router-tools');
+const tools = require('toob-router-tools');
 const client = new tools.Client(process.env.ROUTER_IP, process.env.ROUTER_USERNAME, process.env.ROUTER_PASSWORD);
 
 const login = async () => {
